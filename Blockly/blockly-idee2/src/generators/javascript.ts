@@ -37,12 +37,11 @@ forBlock['add_text'] = function (
   return code;
 };
 
-forBlock['move_right'] = function (
+forBlock['wait'] = function (
   block: Blockly.Block,
   generator: Blockly.CodeGenerator
 ) {
-  const stepCount = generator.valueToCode(block, 'STEP_COUNT', Order.NONE) || "''";
-
-  const code = `console.log(${stepCount});\n`;
+  const seconds = block.getFieldValue('SECONDS');
+  const code = `await new Promise(resolve => setTimeout(resolve, ${seconds} * 1000));\n`;
   return code;
 };

@@ -11,7 +11,6 @@ import { javascriptGenerator } from 'blockly/javascript';
 import { save, load } from './serialization';
 import { toolbox } from './toolbox';
 import './index.css';
-import { block } from 'blockly/core/tooltip';
 
 // Register the blocks and generator with Blockly
 Blockly.common.defineBlocks(blocks);
@@ -27,7 +26,7 @@ function highlightBlock(id: string) {
   if (ws) ws.highlightBlock(id);
 }
 
-const runCode = () => {
+const runCode = async () => {
   javascriptGenerator.STATEMENT_PREFIX = 'highlightBlock(%1);\n';
   javascriptGenerator.addReservedWords('highlightBlock');
   const code = javascriptGenerator.workspaceToCode(ws);
@@ -35,7 +34,12 @@ const runCode = () => {
 
   if (outputDiv) outputDiv.innerHTML = '';
 
-  eval(code);
+  // Verwende eval, um den generierten Code auszuführen
+  try {
+    await eval(`(async () => {${code}})()`);
+  } catch (error) {
+    console.error('Error in generated code:', error);
+  }
 };
 
 if (ws) {
@@ -50,7 +54,6 @@ if (ws) {
     if (e.isUiEvent) return;
     save(ws);
   });
-
 
   // Whenever the workspace changes meaningfully, run the code again.
   ws.addChangeListener((e: Blockly.Events.Abstract) => {

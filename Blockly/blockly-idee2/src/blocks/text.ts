@@ -32,25 +32,27 @@ const addText = {
   'helpUrl': '',
 };
 
-const myCustomBlock = {
-  'type': 'move_right',
-  'message0': 'Move right %1 step',
+const waitBlock = {
+  'type': 'wait',
+  'message0': 'Wait %1 seconds',
   'args0': [
     {
       'type': 'field_number',
-      'name': 'STEP_COUNT',
-      'check': 'Number',
+      'name': 'SECONDS',
+      'value': 1,
+      'min': 0,
+      'precision': 1
     }
   ],
   'previousStatement': null,
   'nextStatement': null,
-  'colour': 160,
-  'tooltip': '',
-  'helpUrl': '',
+  'colour': 230,
+  'tooltip': 'Waits for the specified number of seconds.',
+  'helpUrl': ''
 };
 
 // Create the block definitions for the JSON-only blocks.
 // This does not register their definitions with Blockly.
 // This file has no side effects!
 export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray(
-  [addText, myCustomBlock]);
+  [addText, waitBlock]);
