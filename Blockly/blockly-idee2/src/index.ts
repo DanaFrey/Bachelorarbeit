@@ -34,7 +34,6 @@ const runCode = async () => {
 
   if (outputDiv) outputDiv.innerHTML = '';
 
-  // Verwende eval, um den generierten Code auszuführen
   try {
     await eval(`(async () => {${code}})()`);
   } catch (error) {
